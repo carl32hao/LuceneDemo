@@ -97,7 +97,7 @@ public class DefaultIndexReaderPool implements IndexReaderPool {
 		es.submit(new Runnable() {
 			@Override
 			public void run() {
-				logger.info("stale reader recycle thread actived!");
+				logger.info(Thread.currentThread().getName() + ",stale reader recycle thread actived!");
 				if(staleReaderMap.size() > 0){
 					for(Entry<Long,IndexReader> entry : staleReaderMap.entrySet()){
 						try {
@@ -198,6 +198,7 @@ public class DefaultIndexReaderPool implements IndexReaderPool {
 
 	@Override
 	public boolean release() {
+		logger.info("release start");
 		//关闭indexReaderMap中的indexReader
 		if(this.indexReaderMap.size()>0){
 			for (Entry<String,IndexReader> entry:indexReaderMap.entrySet()) {
